@@ -15,15 +15,15 @@ export class AppComponent implements OnInit {
   constructor(private _httpClient: HttpClient) {}
   
   ngOnInit(): void {
-    this.stocks = JSON.parse(this._DATA);    
-    console.log(this.stocks);
-    // this._httpClient.get(environment.apiURL).subscribe({
-    //   next: response => {
-    //     console.log(response);
-    //     this.stocks = response;
-    //   },
-    //   error: e => console.error(e),
-    //   complete: () => console.log("completed!")
-    // });
+    // this.stocks = JSON.parse(this._DATA);    
+    // console.log(this.stocks);
+    this._httpClient.get(environment.apiURL).subscribe({
+      next: response => {
+        console.log(response);
+        this.stocks = response;
+      },
+      error: e => console.error(e),
+      complete: () => console.log("completed!")
+    });
   }
 }
