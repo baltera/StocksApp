@@ -14,9 +14,9 @@
                 <mat-card-content>
                     <div style="text-align: right;">
                         <div>
-                            <strong>${{stock.lastSalePrice}}</strong>&nbsp;<br>
-                            MarketCap: {{stock.marketCap}}&nbsp;<br>
-                            Change: {{stock.percentChange}}&nbsp;
+                            <label class="price-value">$ {{stock.lastSalePrice}}</label>&nbsp;<br>
+                            MarketCap: {{stock.marketCap}}&nbsp;<br>                            
+                            Change: <label class="{{stock.percentChange>=0?'positive-value':'negative-value'}}">{{stock.percentChange}}%&nbsp;</label>
                         </div>
                     </div>
                 </mat-card-content>
