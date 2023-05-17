@@ -12,18 +12,25 @@ export class AppComponent implements OnInit {
   title = 'StocksApp';
   stocks: any;
 
-  constructor(private _httpClient: HttpClient) {}
-  
+  constructor(private _httpClient: HttpClient) { }
+
   ngOnInit(): void {
-    // this.stocks = JSON.parse(this._DATA);    
-    // console.log(this.stocks);
+    this.filterStocks();
+  }
+
+  filterStocks() {
     this._httpClient.get(environment.apiURL).subscribe({
       next: response => {
         console.log(response);
         this.stocks = response;
       },
-      error: e => console.error(e),
+      error: e => {
+        console.error(e);
+        this.stocks = JSON.parse(this._DATA);
+        console.log(this.stocks);
+      },
       complete: () => console.log("completed!")
     });
   }
 }
+
