@@ -2,6 +2,28 @@
     <span>{{title}}</span>
 </mat-toolbar>
 <div class="content">
+    <mat-form-field class="symbol-chip-list">
+        <mat-label>Stock symbols</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter symbol">
+            <mat-chip-row 
+                *ngFor="let symbol of symbols" 
+                (removed)="remove(symbol)" 
+                [editable]="true"
+                (edited)="edit(symbol, $event)" 
+                [aria-description]="'press enter to edit ' + symbol.name">
+                {{symbol.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + symbol.name">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            <input placeholder="New symbol..." 
+                [matChipInputFor]="chipGrid"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-grid>
+    </mat-form-field>
+    <br>      
     <div fxLayout="row wrap" fxLayoutGap="10px grid">
         <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let stock of stocks">
             <mat-card>
