@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
     // Add symbol
     if (value) {
       this.symbols.push({ name: value });
+      this.filterStocks();
     }
 
     // Clear the input value
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
 
     if (index >= 0) {
       this.symbols.splice(index, 1);
+      this.filterStocks();
     }
   }
 
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit {
     // Remove symbol if it no longer has a name
     if (!value) {
       this.remove(symbol);
+      this.filterStocks();
       return;
     }
 
@@ -51,6 +54,7 @@ export class AppComponent implements OnInit {
     const index = this.symbols.indexOf(symbol);
     if (index >= 0) {
       this.symbols[index].name = value;
+      this.filterStocks();
     }
   }
 
@@ -61,7 +65,12 @@ export class AppComponent implements OnInit {
   }
 
   filterStocks() {
-    this._httpClient.get(environment.apiURL).subscribe({
+    if (this.symbols.length <= 0) {
+      alert("Symbols expected!");
+      return;
+    }
+    let queryUrl = "?tickers=" + this.symbols.map(s => s.name).join(",");
+    this._httpClient.get(environment.apiURL + environment.stocksEndpoint + queryUrl).subscribe({
       next: response => {
         console.log(response);
         this.stocks = response;

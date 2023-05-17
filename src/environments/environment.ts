@@ -1,3 +1,4 @@
 export const environment = {
-    apiURL: "https://localhost:7235/api/Stocks?tickers=TSLA"
+    apiURL: "https://localhost:7235/api/",    
+    stocksEndpoint: "Stocks"
 };
