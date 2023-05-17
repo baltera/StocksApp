@@ -24,6 +24,9 @@
         </mat-chip-grid>
     </mat-form-field>
     <br>      
+    <div id="loading-div">
+        <mat-spinner mode="indeterminate" color="accent"></mat-spinner>
+    </div>
     <div fxLayout="row wrap" fxLayoutGap="10px grid">
         <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let stock of stocks">
             <mat-card>

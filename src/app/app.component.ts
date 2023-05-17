@@ -18,6 +18,12 @@ export class AppComponent implements OnInit {
   addOnBlur = true;
   symbols: Symbol[] = [{ name: 'TSLA' }, { name: 'MSFT' }, { name: 'GIB' }];
 
+  toggleSpinner(show: boolean) {
+    let loading = document.getElementById("loading-div");
+    if (loading)
+      loading.style.display = show ? "flex" : "none";
+  }
+
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -70,18 +76,22 @@ export class AppComponent implements OnInit {
       return;
     }
     let queryUrl = "?tickers=" + this.symbols.map(s => s.name).join(",");
-    this._httpClient.get(environment.apiURL + environment.stocksEndpoint + queryUrl).subscribe({
-      next: response => {
-        console.log(response);
-        this.stocks = response;
-      },
-      error: e => {
-        console.error(e);
-        this.stocks = JSON.parse(this._DATA);
-        console.log(this.stocks);
-      },
-      complete: () => console.log("completed!")
-    });
+    this.toggleSpinner(true);
+    this._httpClient.get(environment.apiURL + environment.stocksEndpoint + queryUrl)
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.stocks = response;
+        },
+        error: e => {
+          console.error(e);
+          this.stocks = JSON.parse(this._DATA);
+          console.log(this.stocks);
+        }
+      })
+      .add(
+        () => this.toggleSpinner(false)
+      );
   }
 }
 
