@@ -1,4 +1,4 @@
 export const environment = {
-    apiURL: "https://localhost:7235/api/",    
+    apiURL: "https://baltera-stocks.azurewebsites.net/api/",    
     stocksEndpoint: "Stocks"
 };
